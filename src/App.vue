@@ -3,6 +3,7 @@
     <AppHeader>都道府県の人口 </AppHeader>
     <SubTitle>都道府県</SubTitle>
     <CheckButton :prefecture="prefDummy" @check="check($event)"></CheckButton>
+    <LineChart :chartData="null" />
   </div>
 </template>
 
@@ -10,12 +11,15 @@
 import AppHeader from "@/components/AppHeader.vue";
 import SubTitle from "@/components/SubTitle.vue";
 import CheckButton from "@/components/CheckButton.vue";
+import LineChart from "@/components/LineChart.vue";
+
 export default {
   name: "App",
   components: {
     AppHeader,
     SubTitle,
-    CheckButton
+    CheckButton,
+    LineChart
   },
   data() {
     return {
