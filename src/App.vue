@@ -8,7 +8,7 @@
       :key="prefecture.prefCode"
       @check="check($event)"
     />
-    <LineChart :chartData="chartData" />
+    <LineChart :chartData="chartData" :options="options" />
   </div>
 </template>
 
@@ -29,7 +29,35 @@ export default {
   data() {
     return {
       prefDummy: { prefCode: 1, prefName: "北海道" },
-      isShow: 0
+      isShow: 0,
+      options: {
+        legend: {
+          position: "right"
+        },
+        scales: {
+          xAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: "年度"
+              }
+            }
+          ],
+          yAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: "人口数"
+              },
+              ticks: {
+                callback: function(label) {
+                  return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+              }
+            }
+          ]
+        }
+      }
     };
   },
   methods: {
