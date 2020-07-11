@@ -1,11 +1,33 @@
 <template>
-  <div id="app"></div>
+  <div id="app">
+    <AppHeader>都道府県の人口 </AppHeader>
+    <SubTitle>都道府県</SubTitle>
+    <CheckButton :prefecture="prefDummy" @check="check($event)"></CheckButton>
+  </div>
 </template>
 
 <script>
+import AppHeader from "@/components/AppHeader.vue";
+import SubTitle from "@/components/SubTitle.vue";
+import CheckButton from "@/components/CheckButton.vue";
 export default {
   name: "App",
-  components: {}
+  components: {
+    AppHeader,
+    SubTitle,
+    CheckButton
+  },
+  data() {
+    return {
+      prefDummy: { prefCode: 1, prefName: "北海道" },
+      isShow: 0
+    };
+  },
+  methods: {
+    check(eventArgs) {
+      console.log(eventArgs);
+    }
+  }
 };
 </script>
 
