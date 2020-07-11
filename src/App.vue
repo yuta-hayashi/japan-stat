@@ -2,7 +2,12 @@
   <div id="app">
     <AppHeader>都道府県の人口 </AppHeader>
     <SubTitle>都道府県</SubTitle>
-    <CheckButton :prefecture="prefDummy" @check="check($event)"></CheckButton>
+    <CheckButton
+      v-for="prefecture in prefectures"
+      :prefecture="prefecture"
+      :key="prefecture.prefCode"
+      @check="check($event)"
+    />
     <LineChart :chartData="null" />
   </div>
 </template>
@@ -30,6 +35,14 @@ export default {
   methods: {
     check(eventArgs) {
       console.log(eventArgs);
+    }
+  },
+  mounted() {
+    this.$store.dispatch("getPrefectures");
+  },
+  computed: {
+    prefectures() {
+      return this.$store.state.prefectures;
     }
   }
 };
