@@ -5,11 +5,37 @@ const { reactiveProp } = mixins;
 export default {
   extends: Line,
   mixins: [reactiveProp],
-  props: {
-    options: {
-      type: Object,
-      default: null
-    }
+  data() {
+    return {
+      options: {
+        legend: {
+          position: "right"
+        },
+        scales: {
+          xAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: "年度"
+              }
+            }
+          ],
+          yAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: "人口数"
+              },
+              ticks: {
+                callback: function(label) {
+                  return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+              }
+            }
+          ]
+        }
+      }
+    };
   },
   mounted() {
     this.renderChart(this.chartData, this.options);
