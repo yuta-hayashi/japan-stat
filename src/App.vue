@@ -1,14 +1,18 @@
 <template>
   <div id="app">
     <AppHeader>都道府県の人口 </AppHeader>
-    <SubTitle>都道府県</SubTitle>
-    <CheckButton
-      v-for="prefecture in prefectures"
-      :prefecture="prefecture"
-      :key="prefecture.prefCode"
-      @check="check($event)"
-    />
-    <LineChart :chartData="chartData" />
+    <div id="content">
+      <SubTitle>都道府県</SubTitle>
+      <div id="prefList">
+        <CheckButton
+          v-for="prefecture in prefectures"
+          :prefecture="prefecture"
+          :key="prefecture.prefCode"
+          @check="check($event)"
+        />
+      </div>
+      <LineChart :chartData="chartData" />
+    </div>
   </div>
 </template>
 
@@ -71,5 +75,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   color: #2c3e50;
+}
+
+#prefList {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2em 0;
+}
+
+#content {
+  margin: 0 1em;
 }
 </style>
