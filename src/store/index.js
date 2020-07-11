@@ -22,8 +22,8 @@ export default new Vuex.Store({
     setDataSets(state, dataSets) {
       state.datasets.push(dataSets);
     },
-    deleteDataSets(state, dataSets) {
-      state.datasets = dataSets;
+    deleteDataSets(state, target) {
+      state.datasets.splice(target, 1);
     }
   },
   actions: {
@@ -70,10 +70,10 @@ export default new Vuex.Store({
       ctx.commit("setDataSets", rawData);
     },
     deletePref(ctx, prefCode) {
-      const newDataSets = ctx.state.datasets.filter(
-        (pref) => pref.prefCode !== prefCode
+      const target = ctx.state.datasets.findIndex(
+        (pref) => pref.prefCode == prefCode
       );
-      ctx.commit("deleteDataSets", newDataSets);
+      ctx.commit("deleteDataSets", target);
     }
   },
   modules: {}
