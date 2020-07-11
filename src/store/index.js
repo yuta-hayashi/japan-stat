@@ -11,7 +11,8 @@ export default new Vuex.Store({
     prefectures: [],
     labels: [],
     datasets: [],
-    apiCache: {}
+    apiCache: {},
+    isLoading: false
   },
   mutations: {
     setPrefectures(state, prefectures) {
@@ -28,10 +29,14 @@ export default new Vuex.Store({
     },
     setApiCache(state, dataSets) {
       state.apiCache[dataSets.prefCode] = dataSets;
+    },
+    toggleIsLoading(state) {
+      state.isLoading = !state.isLoading;
     }
   },
   actions: {
     getPrefectures(ctx) {
+      ctx.commit("toggleIsLoading");
       axios
         .get("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
           headers: { "X-API-KEY": APIKey }
@@ -40,12 +45,14 @@ export default new Vuex.Store({
           console.log(res);
           ctx.commit("setPrefectures", res.data.result);
         });
+      ctx.commit("toggleIsLoading");
     },
     async getData(ctx, prefCode) {
       if (ctx.state.apiCache[prefCode]) {
         ctx.commit("setDataSets", ctx.state.apiCache[prefCode]);
         return;
       }
+      ctx.commit("toggleIsLoading");
       const rawData = await axios
         .get(
           `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?prefCode=${prefCode}`,
@@ -77,6 +84,7 @@ export default new Vuex.Store({
       rawData.borderColor = color;
       ctx.commit("setDataSets", rawData);
       ctx.commit("setApiCache", rawData);
+      ctx.commit("toggleIsLoading");
     },
     deletePref(ctx, prefCode) {
       const target = ctx.state.datasets.findIndex(
