@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     prefectures: [],
     labels: [],
-    datasets: []
+    datasets: [],
+    apiCache: {}
   },
   mutations: {
     setPrefectures(state, prefectures) {
@@ -24,6 +25,9 @@ export default new Vuex.Store({
     },
     deleteDataSets(state, target) {
       state.datasets.splice(target, 1);
+    },
+    setApiCache(state, dataSets) {
+      state.apiCache[dataSets.prefCode] = dataSets;
     }
   },
   actions: {
@@ -38,6 +42,10 @@ export default new Vuex.Store({
         });
     },
     async getData(ctx, prefCode) {
+      if (ctx.state.apiCache[prefCode]) {
+        ctx.commit("setDataSets", ctx.state.apiCache[prefCode]);
+        return;
+      }
       const rawData = await axios
         .get(
           `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?prefCode=${prefCode}`,
@@ -68,6 +76,7 @@ export default new Vuex.Store({
       rawData.backgroundColor = color;
       rawData.borderColor = color;
       ctx.commit("setDataSets", rawData);
+      ctx.commit("setApiCache", rawData);
     },
     deletePref(ctx, prefCode) {
       const target = ctx.state.datasets.findIndex(
