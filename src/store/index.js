@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import colorList from "@/assets/colorList.json";
 
 Vue.use(Vuex);
 const APIKey = "C8eBr9e61aQqZW4zeEzlWtn0plZYvqDqzrM9EyV5";
@@ -60,8 +61,12 @@ export default new Vuex.Store({
         delete point.value;
       });
       rawData.fill = false;
-      rawData.borderColor =
-        "#" + Math.floor(Math.random() * 16777215).toString(16);
+      // rawData.borderColor =
+      //   "#" + Math.floor(Math.random() * 16777215).toString(16);
+      //const color = `hsl(${(360 / 18) * prefCode},80%,60%)`;
+      const color = colorList[prefCode - 1];
+      rawData.backgroundColor = color;
+      rawData.borderColor = color;
       ctx.commit("setDataSets", rawData);
     },
     deletePref(ctx, prefCode) {
