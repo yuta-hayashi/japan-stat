@@ -8,7 +8,7 @@
       :key="prefecture.prefCode"
       @check="check($event)"
     />
-    <LineChart :chartData="null" />
+    <LineChart :chartData="chartData" />
   </div>
 </template>
 
@@ -35,6 +35,11 @@ export default {
   methods: {
     check(eventArgs) {
       console.log(eventArgs);
+      if (eventArgs.isCheck) {
+        this.$store.dispatch("getData", eventArgs.prefCode);
+      } else {
+        this.$store.dispatch("deletePref", eventArgs.prefCode);
+      }
     }
   },
   mounted() {
@@ -43,6 +48,13 @@ export default {
   computed: {
     prefectures() {
       return this.$store.state.prefectures;
+    },
+    chartData() {
+      const chartData = {
+        labels: this.$store.state.labels,
+        datasets: this.$store.state.datasets
+      };
+      return chartData;
     }
   }
 };
