@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppHeader>都道府県の人口 </AppHeader>
+    <AppHeader>都道府県別の人口</AppHeader>
     <div id="content">
       <SubTitle>都道府県</SubTitle>
       <div id="prefList">
@@ -30,15 +30,8 @@ export default {
     CheckButton,
     LineChart
   },
-  data() {
-    return {
-      prefDummy: { prefCode: 1, prefName: "北海道" },
-      isShow: 0
-    };
-  },
   methods: {
     check(eventArgs) {
-      console.log(eventArgs);
       if (eventArgs.isCheck) {
         this.$store.dispatch("getData", eventArgs.prefCode);
       } else {

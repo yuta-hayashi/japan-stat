@@ -35,23 +35,25 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getPrefectures(ctx) {
+    async getPrefectures(ctx) {
       ctx.commit("toggleIsLoading");
-      axios
+      const prefectures = await axios
         .get("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
           headers: { "X-API-KEY": APIKey }
         })
         .then(res => {
-          console.log(res);
-          ctx.commit("setPrefectures", res.data.result);
+          return res.data.result;
         });
+      ctx.commit("setPrefectures", prefectures);
       ctx.commit("toggleIsLoading");
     },
     async getData(ctx, prefCode) {
+      //キャッシュが存在した場合はそれを使ってリクエストはしない
       if (ctx.state.apiCache[prefCode]) {
         ctx.commit("setDataSets", ctx.state.apiCache[prefCode]);
         return;
       }
+
       ctx.commit("toggleIsLoading");
       const rawData = await axios
         .get(
@@ -63,28 +65,36 @@ export default new Vuex.Store({
         .then(res => {
           return res.data.result.data[0];
         });
-      rawData.prefCode = prefCode;
+
+      //APIレスポンスのlabelが"総人口"なので県名に直す
       rawData.label = ctx.state.prefectures[prefCode - 1].prefName;
+
+      //横軸が定義されてない場合は生成する
       if (ctx.state.labels.length == 0) {
         const labels = rawData.data.map(point => {
-          point.year;
+          return point.year;
         });
         ctx.commit("setLabels", labels);
       }
+
+      //chartjsの形式にデータ構造を変更
       rawData.data.forEach((point, index) => {
         point.x = index;
         point.y = point.value;
         delete point.year;
         delete point.value;
       });
+
+      //chartjsのグラフの設定
       rawData.fill = false;
-      // rawData.borderColor =
-      //   "#" + Math.floor(Math.random() * 16777215).toString(16);
-      //const color = `hsl(${(360 / 18) * prefCode},80%,60%)`;
       const color = colorList[prefCode - 1];
       rawData.backgroundColor = color;
       rawData.borderColor = color;
+
       ctx.commit("setDataSets", rawData);
+
+      // ApiCacheのIndex用にprefCodeを追加
+      rawData.prefCode = prefCode;
       ctx.commit("setApiCache", rawData);
       ctx.commit("toggleIsLoading");
     },
