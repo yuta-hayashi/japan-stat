@@ -5,6 +5,11 @@ const { reactiveProp } = mixins;
 export default {
   extends: Line,
   mixins: [reactiveProp],
+  props: {
+    "css-classes": {
+      default: "chart-container"
+    }
+  },
   data() {
     return {
       options: {
@@ -47,3 +52,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.chart-container {
+  position: relative;
+  min-height: 50vh;
+}
+</style>
