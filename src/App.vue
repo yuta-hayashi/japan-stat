@@ -13,6 +13,7 @@
       </div>
       <LineChart :chartData="chartData" />
     </div>
+    <ErrorMessage />
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import AppHeader from "@/components/AppHeader.vue";
 import SubTitle from "@/components/SubTitle.vue";
 import CheckButton from "@/components/CheckButton.vue";
 import LineChart from "@/components/LineChart.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
 
 export default {
   name: "App",
@@ -28,7 +30,8 @@ export default {
     AppHeader,
     SubTitle,
     CheckButton,
-    LineChart
+    LineChart,
+    ErrorMessage
   },
   methods: {
     check(eventArgs) {

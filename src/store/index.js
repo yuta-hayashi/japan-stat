@@ -12,7 +12,8 @@ export default new Vuex.Store({
     labels: [],
     datasets: [],
     apiCache: {},
-    isLoading: false
+    isLoading: false,
+    isFaild: false
   },
   mutations: {
     setPrefectures(state, prefectures) {
@@ -32,6 +33,13 @@ export default new Vuex.Store({
     },
     toggleIsLoading(state) {
       state.isLoading = !state.isLoading;
+    },
+    showError(state) {
+      state.isFaild = true;
+      state.isLoading = false;
+      setTimeout(() => {
+        state.isFaild = false;
+      }, 2700);
     }
   },
   actions: {
@@ -43,6 +51,10 @@ export default new Vuex.Store({
         })
         .then(res => {
           return res.data.result;
+        })
+        .catch(err => {
+          ctx.commit("showError");
+          console.error(err);
         });
       ctx.commit("setPrefectures", prefectures);
       ctx.commit("toggleIsLoading");
@@ -64,6 +76,10 @@ export default new Vuex.Store({
         )
         .then(res => {
           return res.data.result.data[0];
+        })
+        .catch(err => {
+          ctx.commit("showError");
+          console.error(err);
         });
 
       //APIレスポンスのlabelが"総人口"なので県名に直す
