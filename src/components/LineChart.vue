@@ -8,6 +8,10 @@ export default {
   data() {
     return {
       options: {
+        title: {
+          display: true,
+          text: ""
+        },
         legend: {
           position: "right"
         },
