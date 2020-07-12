@@ -41,7 +41,7 @@ export default new Vuex.Store({
         .get("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
           headers: { "X-API-KEY": APIKey }
         })
-        .then((res) => {
+        .then(res => {
           console.log(res);
           ctx.commit("setPrefectures", res.data.result);
         });
@@ -60,13 +60,15 @@ export default new Vuex.Store({
             headers: { "X-API-KEY": APIKey }
           }
         )
-        .then((res) => {
+        .then(res => {
           return res.data.result.data[0];
         });
       rawData.prefCode = prefCode;
       rawData.label = ctx.state.prefectures[prefCode - 1].prefName;
       if (ctx.state.labels.length == 0) {
-        const labels = rawData.data.map((point) => point.year);
+        const labels = rawData.data.map(point => {
+          point.year;
+        });
         ctx.commit("setLabels", labels);
       }
       rawData.data.forEach((point, index) => {
@@ -87,9 +89,9 @@ export default new Vuex.Store({
       ctx.commit("toggleIsLoading");
     },
     deletePref(ctx, prefCode) {
-      const target = ctx.state.datasets.findIndex(
-        (pref) => pref.prefCode == prefCode
-      );
+      const target = ctx.state.datasets.findIndex(pref => {
+        pref.prefCode == prefCode;
+      });
       ctx.commit("deleteDataSets", target);
     }
   },
