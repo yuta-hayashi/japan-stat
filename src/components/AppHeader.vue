@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1 id="appHeader"><slot></slot></h1>
+    <a id="appHeader_link" href="https://github.com/yuta-hayashi/japan-stat" target="_blank">GitHub</a>
+    <h1 id="appHeader">
+      <slot></slot>
+    </h1>
     <Loading v-show="isLoading" id="appHeader_loading" />
   </div>
 </template>
@@ -26,6 +29,16 @@ export default {
   text-align: center;
   font-weight: normal;
   padding: 0.2em;
+}
+#appHeader_link {
+  position: absolute;
+  left: -1.5em;
+  top: 0.5em;
+  padding: 0.2em 1.2em;
+  font-size: 0.9em;
+  background: #24292e;
+  color: #ffffff;
+  transform: rotate(-45deg);
 }
 #appHeader_loading {
   position: absolute;
