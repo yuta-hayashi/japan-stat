@@ -4,7 +4,7 @@ import axios from "axios";
 import colorList from "@/assets/colorList.json";
 
 Vue.use(Vuex);
-const APIKey = "C8eBr9e61aQqZW4zeEzlWtn0plZYvqDqzrM9EyV5";
+const APIKey = process.env.VUE_APP_RESAS_API_KEY;
 
 export default new Vuex.Store({
   state: {
