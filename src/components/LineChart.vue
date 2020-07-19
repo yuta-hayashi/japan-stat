@@ -2,6 +2,40 @@
 import { Line, mixins } from "vue-chartjs";
 const { reactiveProp } = mixins;
 
+const options = {
+  title: {
+    display: true,
+    text: ""
+  },
+  legend: {
+    position: "right"
+  },
+  scales: {
+    xAxes: [
+      {
+        scaleLabel: {
+          display: true,
+          labelString: "年度"
+        }
+      }
+    ],
+    yAxes: [
+      {
+        scaleLabel: {
+          display: true,
+          labelString: "人口数"
+        },
+        ticks: {
+          callback: function(label) {
+            return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          }
+        }
+      }
+    ]
+  },
+  maintainAspectRatio: false
+};
+
 export default {
   extends: Line,
   mixins: [reactiveProp],
@@ -12,39 +46,7 @@ export default {
   },
   data() {
     return {
-      options: {
-        title: {
-          display: true,
-          text: ""
-        },
-        legend: {
-          position: "right"
-        },
-        scales: {
-          xAxes: [
-            {
-              scaleLabel: {
-                display: true,
-                labelString: "年度"
-              }
-            }
-          ],
-          yAxes: [
-            {
-              scaleLabel: {
-                display: true,
-                labelString: "人口数"
-              },
-              ticks: {
-                callback: function(label) {
-                  return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                }
-              }
-            }
-          ]
-        },
-        maintainAspectRatio: false
-      }
+      options: options
     };
   },
   mounted() {
