@@ -107,17 +107,16 @@ export default new Vuex.Store({
       rawData.backgroundColor = color;
       rawData.borderColor = color;
 
-      ctx.commit("setDataSets", rawData);
-
-      // ApiCacheのIndex用にprefCodeを追加
+      // ApiCacheとdeletePrefのIndex用にprefCodeを追加
       rawData.prefCode = prefCode;
+      ctx.commit("setDataSets", rawData);
       ctx.commit("setApiCache", rawData);
       ctx.commit("toggleIsLoading");
     },
     deletePref(ctx, prefCode) {
-      const target = ctx.state.datasets.findIndex(pref => {
-        pref.prefCode == prefCode;
-      });
+      const target = ctx.state.datasets.findIndex(
+        pref => pref.prefCode === prefCode
+      );
       ctx.commit("deleteDataSets", target);
     }
   },
