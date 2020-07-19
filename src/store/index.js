@@ -13,7 +13,7 @@ export default new Vuex.Store({
     datasets: [],
     apiCache: {},
     isLoading: false,
-    isFaild: false
+    isFailed: false
   },
   mutations: {
     setPrefectures(state, prefectures) {
@@ -35,10 +35,10 @@ export default new Vuex.Store({
       state.isLoading = !state.isLoading;
     },
     showError(state) {
-      state.isFaild = true;
+      state.isFailed = true;
       state.isLoading = false;
       setTimeout(() => {
-        state.isFaild = false;
+        state.isFailed = false;
       }, 2700);
     }
   },

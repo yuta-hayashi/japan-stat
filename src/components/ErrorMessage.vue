@@ -9,7 +9,7 @@ export default {
   name: "ErrorMessage",
   computed: {
     isShow() {
-      if (this.$store.state.isFaild) return "show";
+      if (this.$store.state.isFailed) return "show";
       return "";
     }
   }
