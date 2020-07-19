@@ -1,5 +1,5 @@
 <template>
-  <label class="checkButton">
+  <label class="checkButton" :for="prefecture.prefCode">
     <input
       type="checkbox"
       :id="prefecture.prefCode"
@@ -39,6 +39,6 @@ export default {
 <style scoped>
 .checkButton {
   width: 6em;
-  margin-bottom: 0.2em;
+  cursor: pointer;
 }
 </style>

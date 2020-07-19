@@ -1,6 +1,6 @@
 <template>
   <div id="errorMessage" :class="isShow">
-    <span>データを取得できませんでした</span>
+    <p>データを取得できませんでした</p>
   </div>
 </template>
 

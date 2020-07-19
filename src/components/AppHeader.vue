@@ -1,10 +1,15 @@
 <template>
   <div>
-    <a id="appHeader_link" href="https://github.com/yuta-hayashi/japan-stat" target="_blank">GitHub</a>
-    <h1 id="appHeader">
+    <a
+      class="appHeader_link"
+      href="https://github.com/yuta-hayashi/japan-stat"
+      target="_blank"
+      rel="noopener noreferrer"
+    >GitHub</a>
+    <h1 class="appHeader">
       <slot></slot>
     </h1>
-    <Loading v-show="isLoading" id="appHeader_loading" />
+    <Loading v-show="isLoading" class="appHeader_loading" />
   </div>
 </template>
 
@@ -22,7 +27,7 @@ export default {
 </script>
 
 <style scoped>
-#appHeader {
+.appHeader {
   background: var(--primary);
   color: #ffffff;
   margin: 0;
@@ -30,7 +35,7 @@ export default {
   font-weight: normal;
   padding: 0.2em;
 }
-#appHeader_link {
+.appHeader_link {
   position: absolute;
   left: -1.5em;
   top: 0.5em;
@@ -40,7 +45,7 @@ export default {
   color: #ffffff;
   transform: rotate(-45deg);
 }
-#appHeader_loading {
+.appHeader_loading {
   position: absolute;
   top: 1em;
   right: 1em;
